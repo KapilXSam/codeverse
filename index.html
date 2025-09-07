@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" data-accent-color="blue">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodeGenesis Weaver</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        /* Premium Dark Theme (Default - VS Code inspired) */
+        --background-hsl: 220 13% 11%; /* #1e1e1e */
+        --foreground-hsl: 210 20% 80%; /* #cccccc */
+        --card-hsl: 220 13% 15%; /* #252526 */
+        --card-foreground-hsl: 210 20% 80%;
+        --popover-hsl: 220 14% 10%; /* #191919 */
+        --popover-foreground-hsl: 210 20% 80%;
+        --secondary-hsl: 220 12% 23%; /* #38383a */
+        --secondary-foreground-hsl: 210 20% 85%;
+        --muted-hsl: 220 12% 23%;
+        --muted-foreground-hsl: 210 15% 55%; /* #808080 */
+        --border-hsl: 220 13% 20%; /* #303031 */
+        --input-hsl: 220 13% 22%; /* #333333 */
+        --ring-hsl: 211 90% 50%;
+        
+        /* Default Accent (Radiant Blue) */
+        --primary-hsl: 211 90% 50%;
+        --primary-foreground-hsl: 210 40% 98%;
+      }
+
+      html.light {
+        /* Light Theme */
+        --background-hsl: 0 0% 100%;
+        --foreground-hsl: 222 47% 11%;
+        --card-hsl: 210 40% 98%;
+        --card-foreground-hsl: 222 47% 11%;
+        --popover-hsl: 0 0% 100%;
+        --popover-foreground-hsl: 222 47% 11%;
+        --secondary-hsl: 210 40% 96%;
+        --secondary-foreground-hsl: 222 47% 11%;
+        --muted-hsl: 210 40% 96%;
+        --muted-foreground-hsl: 215 16% 47%;
+        --border-hsl: 214 32% 91%;
+        --input-hsl: 214 32% 91%;
+        --ring-hsl: 211 90% 50%;
+      }
+
+      /* Accent Color Definitions */
+      html[data-accent-color="teal"] { --primary-hsl: 160 84% 39%; --primary-foreground-hsl: 158 100% 11%; }
+
+      html[data-accent-color="blue"] { --primary-hsl: 211 90% 50%; --primary-foreground-hsl: 210 40% 98%; }
+      html.light[data-accent-color="blue"] { --primary-foreground-hsl: 210 40% 98%; }
+      
+      html[data-accent-color="green"] { --primary-hsl: 142 71% 45%; --primary-foreground-hsl: 210 40% 98%; }
+      html.light[data-accent-color="green"] { --primary-foreground-hsl: 142 81% 15%; }
+      
+      html[data-accent-color="violet"] { --primary-hsl: 262 83% 58%; --primary-foreground-hsl: 210 40% 98%; }
+      html.light[data-accent-color="violet"] { --primary-foreground-hsl: 210 40% 98%; }
+      
+      html[data-accent-color="orange"] { --primary-hsl: 25 95% 53%; --primary-foreground-hsl: 210 40% 98%; }
+      html.light[data-accent-color="orange"] { --primary-foreground-hsl: 210 40% 98%; }
+      
+      html[data-accent-color="rose"] { --primary-hsl: 347 90% 49%; --primary-foreground-hsl: 210 40% 98%; }
+      html.light[data-accent-color="rose"] { --primary-foreground-hsl: 210 40% 98%; }
+
+      body {
+        background-color: hsl(var(--background-hsl));
+        color: hsl(var(--foreground-hsl));
+        font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              border: 'hsl(var(--border-hsl))',
+              input: 'hsl(var(--input-hsl))',
+              ring: 'hsl(var(--ring-hsl))',
+              background: 'hsl(var(--background-hsl))',
+              foreground: 'hsl(var(--foreground-hsl))',
+              primary: {
+                DEFAULT: 'hsl(var(--primary-hsl))',
+                foreground: 'hsl(var(--primary-foreground-hsl))',
+              },
+              secondary: {
+                DEFAULT: 'hsl(var(--secondary-hsl))',
+                foreground: 'hsl(var(--secondary-foreground-hsl))',
+              },
+              muted: {
+                DEFAULT: 'hsl(var(--muted-hsl))',
+                foreground: 'hsl(var(--muted-foreground-hsl))',
+              },
+              card: {
+                DEFAULT: 'hsl(var(--card-hsl))',
+                foreground: 'hsl(var(--card-foreground-hsl))',
+              },
+              popover: {
+                  DEFAULT: 'hsl(var(--popover-hsl))',
+                  foreground: 'hsl(var(--popover-foreground-hsl))',
+              }
+            },
+            boxShadow: {
+                'glow-primary': '0 0 15px hsl(var(--primary-hsl) / 0.5), 0 0 5px hsl(var(--primary-hsl) / 0.7)',
+            }
+          }
+        }
+      }
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://aistudiocdn.com/react@^19.1.1",
+        "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+        "react/": "https://aistudiocdn.com/react@^19.1.1/",
+        "@google/genai": "https://aistudiocdn.com/@google/genai@^1.17.0",
+        "@monaco-editor/react": "https://aistudiocdn.com/@monaco-editor/react@^4.7.0"
+      }
+    }
+    </script>
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>

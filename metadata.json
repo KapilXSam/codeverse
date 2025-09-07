@@ -1,0 +1,5 @@
+{
+  "name": "CodeGenesis Weaver",
+  "description": "A web-based Integrated Development & Orchestration Environment (IDOE) that empowers users to build software through a collaborative partnership between human oversight and a multi-agent AI workforce, translating natural language prompts into fully managed development projects.",
+  "requestFramePermissions": []
+}
