@@ -1,70 +1,90 @@
 import React, { useState, useEffect } from 'react';
-import { FileNode } from '../types';
+import Split from 'react-split';
 import FileExplorer from './FileExplorer';
 import Editor from './Editor';
 import Terminal from './Terminal';
+import { FileNode } from '../types';
 
 interface IdeViewProps {
   files: FileNode[];
-  onFileChange: (path: string, content: string) => void;
-  terminalLogs: string[];
+  onFileContentChange: (path: string, content: string) => void;
+  terminalOutput: string[];
 }
 
-const IdeView: React.FC<IdeViewProps> = ({ files, onFileChange, terminalLogs }) => {
-  const [selectedFile, setSelectedFile] = useState<{ path: string; content: string } | null>(null);
+const findFile = (nodes: FileNode[], path: string): FileNode | null => {
+  for (const node of nodes) {
+    if (node.path === path) return node;
+    if (node.children) {
+      const found = findFile(node.children, path);
+      if (found) return found;
+    }
+  }
+  return null;
+};
 
-  const findFile = (nodes: FileNode[], path: string): FileNode | undefined => {
-      for (const node of nodes) {
-          if (node.path === path) return node;
-          if (node.children) {
-              const found = findFile(node.children, path);
-              if(found) return found;
-          }
-      }
-      return undefined;
-  };
-  
+
+const IdeView: React.FC<IdeViewProps> = ({ files, onFileContentChange, terminalOutput }) => {
+  const [selectedFilePath, setSelectedFilePath] = useState<string>('/src/App.tsx');
+  const [activeFile, setActiveFile] = useState<FileNode | null>(null);
+
   useEffect(() => {
-    if (selectedFile) {
-        const file = findFile(files, selectedFile.path);
-        if(file && typeof file.content === 'string' && file.content !== selectedFile.content) {
-            setSelectedFile({path: file.path, content: file.content});
+    const foundFile = findFile(files, selectedFilePath);
+    if(foundFile) {
+      setActiveFile(foundFile);
+    } else {
+        // Find first file if selected one is not found
+        const findFirstFile = (nodes: FileNode[]): FileNode | null => {
+            for (const node of nodes) {
+                if (node.content !== undefined) return node;
+                if (node.children) {
+                    const found = findFirstFile(node.children);
+                    if (found) return found;
+                }
+            }
+            return null;
+        }
+        const firstFile = findFirstFile(files);
+        if (firstFile) {
+            setSelectedFilePath(firstFile.path);
+            setActiveFile(firstFile);
         }
     }
-  }, [files, selectedFile?.path]);
+  }, [selectedFilePath, files]);
 
-  const handleSelectFile = (path: string) => {
-    const file = findFile(files, path);
-    if(file && typeof file.content === 'string') {
-        setSelectedFile({ path: file.path, content: file.content });
-    }
-  };
-
-  const handleEditorChange = (value: string | undefined) => {
-    if (selectedFile && value !== undefined) {
-      onFileChange(selectedFile.path, value);
-    }
-  };
-  
   return (
-    <div className="h-full flex flex-col bg-background">
-      <div className="flex-grow flex flex-row overflow-hidden h-2/3">
-        <div className="w-1/4 min-w-[200px] bg-card overflow-y-auto border-r border-border">
-          <FileExplorer files={files} onSelectFile={handleSelectFile} selectedFilePath={selectedFile?.path}/>
-        </div>
-        <div className="w-3/4">
-          {selectedFile ? (
-            <Editor path={selectedFile.path} value={selectedFile.content} onChange={handleEditorChange} />
-          ) : (
-            <div className="h-full flex items-center justify-center text-muted-foreground">
-              Select a file to begin editing
-            </div>
-          )}
-        </div>
+    <div className="flex h-full bg-background">
+      <div className="w-64 bg-card border-r border-border flex-shrink-0">
+        <FileExplorer files={files} onSelectFile={setSelectedFilePath} selectedFilePath={selectedFilePath} />
       </div>
-      <div className="flex-shrink-0 h-1/3 overflow-hidden border-t border-border">
-        <Terminal logs={terminalLogs} />
+      <div className="flex-grow flex flex-col">
+        <Split
+          sizes={[70, 30]}
+          minSize={[200, 150]}
+          direction="vertical"
+          className="flex-grow h-full"
+          gutterClassName="gutter-vertical"
+        >
+          <div className="h-full overflow-auto">
+            <Editor
+              file={activeFile}
+              onContentChange={onFileContentChange}
+            />
+          </div>
+          <div className="h-full overflow-auto">
+            <Terminal output={terminalOutput} />
+          </div>
+        </Split>
       </div>
+      {/* Add styles for react-split gutter */}
+      <style>{`
+        .gutter-vertical {
+          background-color: hsl(var(--border));
+          cursor: row-resize;
+        }
+        .gutter-vertical:hover {
+          background-color: hsl(var(--primary));
+        }
+      `}</style>
     </div>
   );
 };

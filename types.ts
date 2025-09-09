@@ -7,6 +7,15 @@ export enum TaskStatus {
 
 export type Agent = 'Manager' | 'Synthesizer' | 'Guardian';
 
+export interface AgentMessage {
+  id: string;
+  timestamp: string;
+  from: Agent;
+  to: Agent;
+  content: string;
+  contentType: 'text' | 'code';
+}
+
 export interface Task {
   id: string;
   title: string;
@@ -14,6 +23,7 @@ export interface Task {
   status: TaskStatus;
   agent?: Agent;
   logs: string[];
+  communications: AgentMessage[];
   dependencies?: string[];
 }
 

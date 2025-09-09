@@ -7,19 +7,19 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       :root {
-        /* Premium Dark Theme (Default - VS Code inspired) */
-        --background-hsl: 220 13% 11%; /* #1e1e1e */
-        --foreground-hsl: 210 20% 80%; /* #cccccc */
-        --card-hsl: 220 13% 15%; /* #252526 */
-        --card-foreground-hsl: 210 20% 80%;
-        --popover-hsl: 220 14% 10%; /* #191919 */
-        --popover-foreground-hsl: 210 20% 80%;
-        --secondary-hsl: 220 12% 23%; /* #38383a */
-        --secondary-foreground-hsl: 210 20% 85%;
-        --muted-hsl: 220 12% 23%;
-        --muted-foreground-hsl: 210 15% 55%; /* #808080 */
-        --border-hsl: 220 13% 20%; /* #303031 */
-        --input-hsl: 220 13% 22%; /* #333333 */
+        /* Refined Dark Theme (VS Code inspired) */
+        --background-hsl: 222 22% 10%; /* Deeper, more focused background */
+        --foreground-hsl: 210 20% 85%; /* Slightly brighter for readability */
+        --card-hsl: 222 22% 12%;       /* Subtle card background */
+        --card-foreground-hsl: 210 20% 85%;
+        --popover-hsl: 220 14% 10%;
+        --popover-foreground-hsl: 210 20% 85%;
+        --secondary-hsl: 222 22% 18%;   /* Contrasting element background */
+        --secondary-foreground-hsl: 210 20% 90%;
+        --muted-hsl: 222 22% 18%;
+        --muted-foreground-hsl: 215 15% 60%; /* Softer muted text */
+        --border-hsl: 222 22% 15%;     /* Less prominent borders */
+        --input-hsl: 222 22% 16%;      /* Inputs that blend in */
         --ring-hsl: 211 90% 50%;
         
         /* Default Accent (Radiant Blue) */
@@ -101,7 +101,7 @@
               }
             },
             boxShadow: {
-                'glow-primary': '0 0 15px hsl(var(--primary-hsl) / 0.5), 0 0 5px hsl(var(--primary-hsl) / 0.7)',
+                'glow-primary': '0 0 12px hsl(var(--primary-hsl) / 0.4)',
             }
           }
         }
@@ -111,16 +111,17 @@
 <body>
     <div id="root"></div>
     <script type="importmap">
-    {
-      "imports": {
-        "react": "https://aistudiocdn.com/react@^19.1.1",
-        "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
-        "react/": "https://aistudiocdn.com/react@^19.1.1/",
-        "@google/genai": "https://aistudiocdn.com/@google/genai@^1.17.0",
-        "@monaco-editor/react": "https://aistudiocdn.com/@monaco-editor/react@^4.7.0"
-      }
-    }
-    </script>
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.17.0",
+    "@monaco-editor/react": "https://aistudiocdn.com/@monaco-editor/react@^4.7.0",
+    "react-split": "https://aistudiocdn.com/react-split@^2.0.14"
+  }
+}
+</script>
     <script type="module" src="/index.tsx"></script>
 </body>
 </html>

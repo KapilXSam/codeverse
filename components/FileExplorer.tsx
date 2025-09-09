@@ -32,7 +32,7 @@ const FileEntry: React.FC<{
     <div>
       <div
         onClick={handleSelect}
-        className={`flex items-center py-1 cursor-pointer hover:bg-secondary/50 rounded ${isSelected ? 'bg-secondary' : ''}`}
+        className={`flex items-center py-1.5 px-2 cursor-pointer hover:bg-secondary rounded ${isSelected ? 'bg-secondary' : ''}`}
         style={{ paddingLeft }}
       >
         {isDirectory && (
@@ -53,11 +53,13 @@ const FileEntry: React.FC<{
 
 const FileExplorer: React.FC<FileExplorerProps> = ({ files, onSelectFile, selectedFilePath }) => {
   return (
-    <div className="p-2 text-sm text-foreground">
-      <h3 className="font-bold text-muted-foreground p-1 mb-2 text-xs uppercase tracking-wider">Explorer</h3>
-      {files.map(node => (
-        <FileEntry key={node.path} node={node} onSelectFile={onSelectFile} selectedFilePath={selectedFilePath} />
-      ))}
+    <div className="text-sm text-foreground h-full flex flex-col">
+      <h3 className="font-bold text-muted-foreground p-3 text-xs uppercase tracking-widest border-b border-border flex-shrink-0">Explorer</h3>
+      <div className="p-2 flex-grow overflow-y-auto">
+        {files.map(node => (
+          <FileEntry key={node.path} node={node} onSelectFile={onSelectFile} selectedFilePath={selectedFilePath} />
+        ))}
+      </div>
     </div>
   );
 };
